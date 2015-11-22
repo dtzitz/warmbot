@@ -13,7 +13,7 @@ Template.body.helpers({
 
 Template.body.events({
   
-  "submit .net-group": function(event){
+  "submit .new-group": function(event){
     var newGroup = event.target.group.value;
     Meteor.call("addGroup", newGroup);
     event.target.group.value = "";

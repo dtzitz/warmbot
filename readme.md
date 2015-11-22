@@ -2,7 +2,9 @@
 Starting with group messaging to get up and running then will add on the bot read and respond
 ## Installation
 curl https://install.meteor.com/ | sh  
-git clone https://github.com/dtzitz/warmbot.git
+git clone https://github.com/dtzitz/warmbot.git  
+cd warmbot  
+meteor
 ## Usage
 TODO: Write usage instructions
 ## Contributing
