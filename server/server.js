@@ -86,9 +86,10 @@ Meteor.methods({
 		var uniquePhoneBook = new Set(phonebook);
 		
 		//mystery logic in twilio.js file
-		var TWILIO_ACCOUNT_SID = Meteor.call('secret_account_SID')
-		var TWILIO_AUTH_TOKEN = Meteor.call('secret_auth_token')
-		var TWILIO_NUMBER = Meteor.call('secret_twilio_number')
+		var TWILIO_ACCOUNT_SID = Meteor.call('secret_account_SID');
+		var TWILIO_AUTH_TOKEN = Meteor.call('secret_auth_token');
+		var TWILIO_NUMBER = Meteor.call('secret_twilio_number');
+		var MessagingServiceSid = Meteor.call('secret_msg_SID');
 		
 		uniquePhoneBook.forEach(function(number){
 			HTTP.call(
@@ -96,6 +97,7 @@ Meteor.methods({
 				'https://api.twilio.com/2010-04-01/Accounts/'+TWILIO_ACCOUNT_SID+'/SMS/Messages.json',
 				{
 					params:{
+						MessagingServiceSid: MessagingServiceSid,
 						From: TWILIO_NUMBER,
 						To: number,
 						Body: outgoingMessage
