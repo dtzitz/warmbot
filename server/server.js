@@ -1,5 +1,7 @@
+/* global HTTP */
 /* global Meteor */
 /* global Groups */
+
 
 
 Meteor.publish("groups", function(){
@@ -68,6 +70,49 @@ Meteor.methods({
 				{$set: {"numbers.$.checked":toggle}}
 			);
 		}
+	},
+	
+	sendMessage:function(outgoingMessage){
+		var phonebook = [];
+		var recipients = Groups.find({numbers:{$elemMatch:{"checked":true}}});
+		
+		recipients.forEach(function(recipient){
+			for (var index in recipient.numbers){
+				phonebook.push(recipient.numbers[index].number);
+			}
+		});
+		
+		//use Set to make sure all phone numbers are unique
+		var uniquePhoneBook = new Set(phonebook);
+		
+		//mystery logic in twilio.js file
+		var TWILIO_ACCOUNT_SID = Meteor.call('secret_account_SID')
+		var TWILIO_AUTH_TOKEN = Meteor.call('secret_auth_token')
+		var TWILIO_NUMBER = Meteor.call('secret_twilio_number')
+		
+		uniquePhoneBook.forEach(function(number){
+			HTTP.call(
+				"POST",
+				'https://api.twilio.com/2010-04-01/Accounts/'+TWILIO_ACCOUNT_SID+'/SMS/Messages.json',
+				{
+					params:{
+						From: TWILIO_NUMBER,
+						To: number,
+						Body: outgoingMessage
+					},
+					auth: TWILIO_ACCOUNT_SID+':'+TWILIO_AUTH_TOKEN
+				},
+				function (error){
+					if (error){
+						console.log(error);
+					}
+					else{
+						console.log('SMS sent successfully')
+					}
+				}
+			);
+		});
+		
 	}
 	
 })
