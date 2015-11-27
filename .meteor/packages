@@ -20,3 +20,5 @@ accounts-ui
 accounts-password
 accounts-twitter
 http
+iron:router
+check
