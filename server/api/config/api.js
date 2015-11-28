@@ -1,3 +1,4 @@
+/* global API */
 API = {
   authentication: function( apiKey ) {
     //SMS not great for auth, perhaps build a white list of #s
@@ -14,9 +15,17 @@ API = {
       API.utility.response(context, 401, connection);
     }
   },
+  
   methods: {
-    pizza: {
-      GET: function( context, connection ) {},
+    message: {
+      GET: function( context, connection ) {
+        var hasQuery = API.utility.hasData(connection.data);
+        
+        if (hasQuery){
+          
+        }
+      },
+      
       POST: function( context, connection ) {},
       PUT: function( context, connection ) {},
       DELETE: function( context, connection ) {}
@@ -35,7 +44,11 @@ API = {
       }
     },
     hasData: function( data ) {},
-    response: function( context, statusCode, data ) {},
+    response: function( context, statusCode, data ) {
+      context.response.setHeader('Content-Type','application/json');
+      context.response.statusCode = statusCode;
+      context.response.end(JSON.stringify(data));
+    },
     validate: function( data, pattern ) {}
   }
 };
