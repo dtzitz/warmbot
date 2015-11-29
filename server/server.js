@@ -2,7 +2,7 @@
 /* global Meteor */
 /* global Groups */
 
-
+//http://www.codeadventures.com/phone-number-verification-via-twilio-sms-in-meteor/
 
 Meteor.publish("groups", function(){
 	return Groups.find({owner: this.userId})

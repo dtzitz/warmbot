@@ -22,7 +22,9 @@ API = {
         var hasQuery = API.utility.hasData(connection.data);
         
         if (hasQuery){
-          
+          connection.data.owner = connection.owner;
+          var message = 'xml message';
+          API.utility.response(context,200,message)
         }
       },
       
@@ -38,9 +40,6 @@ API = {
         case "GET":
           return request.query;
         case "POST":
-        case "PUT":
-        case "DELETE":
-          return request.body;
       }
     },
     hasData: function( data ) {},
