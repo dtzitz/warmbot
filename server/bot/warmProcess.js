@@ -6,7 +6,7 @@ Meteor.methods({
 		
 		var weatherRegex = /\b(weather|rain|temperature)\b/;
 		
-		if (weatherRegex.text(messageText)){
+		if (weatherRegex.test(messageText)){
 			
 			//should probably call to an actual weather API
 			//using area code for location information
