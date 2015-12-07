@@ -1,3 +1,5 @@
+/* global Meteor */
+/* global HTTP */
 
 Meteor.methods({
 	warmProcess:function(request){
@@ -5,20 +7,45 @@ Meteor.methods({
 		var messageText = request.Body.toLowerCase();
 		
 		var weatherRegex = /\b(weather|rain|temperature)\b/;
+		var zipcodeRegex = /[0-9]{5}/;
 		
-		if (weatherRegex.test(messageText)){
+		if(weatherRegex.test(messageText)){
 			
-			//should probably call to an actual weather API
-			//using area code for location information
+			// api.openweathermap.org/data/2.5/find?q=London&units=imperial
+			//using area code for location information?
+			var openWeatherKey = Meteor.call('openWeather')
+			var zipcode = zipcodeRegex.exec(messageText)
+			
+			//country code of us is hard coded for now
+			//had a terrible time trying to make this http call async. will need help if going to refactor
+			var weatherData = HTTP.get('http://api.openweathermap.org/data/2.5/weather?zip='+zipcode[0]+',us&units=imperial&APPID='+openWeatherKey);
+			console.log("weather data is"+weatherData);
+			var temperature = String(weatherData.data.main.temp);
+			
 			var xmlData = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
 			xmlData += "<Response>";
-			xmlData += "<Message>IT'S GON\' RAIN</Message>";
+			xmlData += "<Message>The temperature is "+temperature+"F</Message>";
 			xmlData += "</Response>";
+			console.log('data from after http get '+xmlData);
+			
+			return xmlData;
+			
+
+		
+			
+
+		//else weatherRexex == false	
+		}else{
+			console.log('stupid sandwich');
+			var xmlData = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+			xmlData += "<Response>";
+			xmlData += "<Message>Beep boop. I'm a stupid sandwich.</Message>";
+			xmlData += "</Response>";
+			
 		
 			return xmlData;
 			
 		}
-		
 		
 	}
 })
@@ -36,3 +63,8 @@ Meteor.methods({
 		// xmlData += "</Response>";
 		
 		// return xmlData;
+		
+		
+
+
+						

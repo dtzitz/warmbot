@@ -4,21 +4,25 @@
 
 Router.route('twilio/endpoint',{where:'server'})
 	.post(function(){
-		var request = this.request.body;
-		console.log(request.From);
+		var userRequest = this.request.body;
+		var response = this.response;
+
+		// var xmlData = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+		// xmlData += "<Response>";
+		// xmlData += "<Message>HELLO WORLD</Message>";
+		// xmlData += "</Response>";
 		
-		
-		//should be:
-		var xmlData = Meteor.call('warmProcess',request)
+		var xmlData = Meteor.call('warmProcess',userRequest)
 		
 		this.response.writeHead(200,{'Content-Type':'application/xml'});
 		this.response.end(xmlData);
+		
+		
+		
+		
+
 	});
 	
-
-
-// if (!fromNumber){
-// 	return 'Error - No from number';
-// }
+	
 
 
