@@ -19,14 +19,15 @@ Meteor.methods({
 			//country code of us is hard coded for now
 			//had a terrible time trying to make this http call async. will need help if going to refactor
 			var weatherData = HTTP.get('http://api.openweathermap.org/data/2.5/weather?zip='+zipcode[0]+',us&units=imperial&APPID='+openWeatherKey);
-			console.log("weather data is"+weatherData);
 			var temperature = String(weatherData.data.main.temp);
+			var currentCondition = String(weatherData.data.weather[0].main);
+			var currentHigh = String(weatherData.data.main.temp_max)
+			var currentLow = String(weatherData.data.main.temp_min)
 			
 			var xmlData = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
 			xmlData += "<Response>";
-			xmlData += "<Message>The temperature is "+temperature+"F</Message>";
+			xmlData += "<Message>It's currently "+temperature+"F. "+currentCondition+" with a high of "+currentHigh+"F and a low of "+currentLow+"F </Message>";
 			xmlData += "</Response>";
-			console.log('data from after http get '+xmlData);
 			
 			return xmlData;
 			
@@ -36,10 +37,10 @@ Meteor.methods({
 
 		//else weatherRexex == false	
 		}else{
-			console.log('stupid sandwich');
+			//this should be a help message probably 
 			var xmlData = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
 			xmlData += "<Response>";
-			xmlData += "<Message>Beep boop. I'm a stupid sandwich.</Message>";
+			xmlData += "<Message>Beep boop. I'm a stupid sandwich. Try \'weather + zipcode\'</Message>";
 			xmlData += "</Response>";
 			
 		
