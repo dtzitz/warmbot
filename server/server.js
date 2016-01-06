@@ -3,6 +3,7 @@
 /* global Groups */
 
 //http://www.codeadventures.com/phone-number-verification-via-twilio-sms-in-meteor/
+//http://cryptb.in/kWc
 
 Meteor.publish("groups", function(){
 	return Groups.find({owner: this.userId})
@@ -86,6 +87,7 @@ Meteor.methods({
 		var uniquePhoneBook = new Set(phonebook);
 		
 		//mystery logic in twilio.js file
+		//3215f6c96b27214ed3c75fb927423eb6
 		var TWILIO_ACCOUNT_SID = Meteor.call('secret_account_SID');
 		var TWILIO_AUTH_TOKEN = Meteor.call('secret_auth_token');
 		var TWILIO_NUMBER = Meteor.call('secret_twilio_number');

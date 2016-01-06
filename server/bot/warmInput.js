@@ -5,7 +5,7 @@
 Router.route('twilio/endpoint',{where:'server'})
 	.post(function(){
 		var userRequest = this.request.body;
-		var response = this.response;
+		
 
 		// var xmlData = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
 		// xmlData += "<Response>";

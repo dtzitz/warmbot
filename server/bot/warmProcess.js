@@ -7,9 +7,12 @@ Meteor.methods({
 		var messageText = request.Body.toLowerCase();
 		
 		var weatherRegex = /\b(weather|rain|temperature)\b/;
-		var zipcodeRegex = /[0-9]{5}/;
+		
+		var remindMeRegex = /\b(remind|reminder|remindme)\b/;
 		
 		if(weatherRegex.test(messageText)){
+			
+			var zipcodeRegex = /[0-9]{5}/;
 			
 			// api.openweathermap.org/data/2.5/find?q=London&units=imperial
 			//using area code for location information?
@@ -33,9 +36,22 @@ Meteor.methods({
 			
 
 		
+		}else if(remindMeRegex.test(messageText)){
 			
-
-		//else weatherRexex == false	
+			var messageRegex = /\b(something)\b/;
+			var minuteRegex = /\b(minute)\b/
+			//this needs to be real
+			
+			
+			var xmlData = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+			xmlData += "<Response>";
+			xmlData += "<Message>Hello from RemindMe </Message>";
+			xmlData += "</Response>";
+			
+			return xmlData;
+		
+		
+		
 		}else{
 			//this should be a help message probably 
 			var xmlData = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
